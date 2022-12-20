@@ -73,6 +73,7 @@ function useStudentList() {
         columns={columns}
         dataSource={list}
         bordered
+        pagination={false}
       />
       {contextHolder}
     </>

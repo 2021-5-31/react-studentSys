@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Button, Form, Input, message } from 'antd';
 import { addStudentApi, updateStudentApi, getStudentDetailApi } from '../api/stuSys'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';

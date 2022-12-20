@@ -1,10 +1,8 @@
 import Header from './components/Header'
 import './css/index.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Home from './components/Home'
-import StudentList from './components/StudentList'
-import EditStudent from './components/EditStudent'
+import { BrowserRouter } from "react-router-dom"
 import 'antd/dist/reset.css'
+import Router from './router/index'
 
 function App() {
   return (
@@ -12,11 +10,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <div className='main'>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/student" element={<StudentList />} />
-            <Route path="/:type/:id" element={<EditStudent />} />
-          </Routes>
+          <Router />
         </div>
       </BrowserRouter>
     </>
