@@ -2,20 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { Table, Button, message } from 'antd';
 import { getStudentListApi, deleteStudentApi } from '../api/stuSys'
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { getStudentList } from '../redux/studentSlice'
+import { getStudentListAsync, deleteStudentAsync } from '../redux/studentSlice'
 
 function useStudentList() {
+  let list = useSelector(state => state.studentReducer.list)
+  list = list.map(item => {
+    return {
+      ...item,
+      key: item.id
+    }
+  })
+  const dispatch = useDispatch()
   const [messageApi, contextHolder] = message.useMessage()
-  const [list, setList] = useState([])
   const goEdit = (id, type) => {
     navigate(`/${type}/${id}`)
   }
   const handleDelete = (id) => {
-    deleteStudentApi(id).then(() => {
+    dispatch(deleteStudentAsync(id)).then(() => {
       messageApi.open({
         type: 'success',
         content: '删除成功'
       })
-      getList()
     })
   }
   const columns = [
@@ -45,19 +54,11 @@ function useStudentList() {
       }
     }
   ]
-  const getList = () => {
-    getStudentListApi().then((data) => {
-      const list = data.map((item) => {
-        return {
-          ...item,
-          key: item.id
-        }
-      })
-      setList(list)
-    })
-  }
   useEffect(() => {
-    getList()
+    // dispatch(getStudentList()) // 同步方式
+    if (!list.length) {
+      dispatch(getStudentListAsync()) // 异步方式
+    }
   }, [])
   const navigate = useNavigate()
   const add = () => {

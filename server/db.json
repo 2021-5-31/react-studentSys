@@ -3,27 +3,17 @@
     {
       "id": 1,
       "studentNo": "123",
-      "name": "qw"
+      "name": "qwf"
     },
     {
-      "id": 2,
-      "studentNo": "567",
-      "name": "fddddd"
+      "studentNo": "1232",
+      "name": "213s",
+      "id": 4
     },
     {
       "studentNo": "sdf",
-      "name": "ddd",
-      "id": 3
-    },
-    {
-      "studentNo": "csd",
-      "name": "444",
+      "name": "sdf",
       "id": 5
-    },
-    {
-      "studentNo": "uuu",
-      "name": "uuu",
-      "id": 6
     }
   ]
 }

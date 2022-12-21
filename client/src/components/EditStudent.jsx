@@ -2,8 +2,12 @@ import React, { useEffect } from 'react'
 import { Button, Form, Input, message } from 'antd';
 import { addStudentApi, updateStudentApi, getStudentDetailApi } from '../api/stuSys'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { addStudentAsync, updateStudentAsync } from '../redux/studentSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function EditStudent() {
+  let studentList = useSelector(state => state.studentReducer.list)
+  const dispatch = useDispatch()
   const [messageApi, contextHolder] = message.useMessage()
   const [form] = Form.useForm()
   const navigate = useNavigate()
@@ -13,9 +17,9 @@ export default function EditStudent() {
   const isDisabled = pageType === 'detail'
   useEffect(() => {
     if (pageType !== 'add') {
-      getStudentDetailApi(id).then(res => {
-        form.setFieldsValue(res)
-      })
+      studentList = studentList.filter(item => item.id === +id)
+      const detail = studentList[0]
+      form.setFieldsValue(detail)
     }
   }, [])
   const onFinish = () => {
@@ -24,7 +28,7 @@ export default function EditStudent() {
       name: form.getFieldValue('name')
     }
     if (pageType === 'add') {
-      addStudentApi(params).then(res => {
+      dispatch(addStudentAsync(params)).then(res => {
         messageApi.open({
           type: 'success',
           content: '添加成功',
@@ -32,7 +36,7 @@ export default function EditStudent() {
         })
       })
     } else if (pageType === 'edit') {
-      updateStudentApi(id, params).then(res => {
+      dispatch(updateStudentAsync({ id, studentInfo: params })).then(res => {
         messageApi.open({
           type: 'success',
           content: '修改成功',
